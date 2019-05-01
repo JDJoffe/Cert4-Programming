@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6853892423543803847}
+  - component: {fileID: 1401514939566400407}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 7841226833258302681}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401514939566400407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058272307641027232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cafebe98534da04c9fcb667cb0fd854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8928787499204621820}
 --- !u!1 &4018305916261873122
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +118,7 @@ GameObject:
   - component: {fileID: 8928787499204621820}
   - component: {fileID: 8830172870262928761}
   - component: {fileID: 5003122274340426167}
+  - component: {fileID: 7841226834428537826}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -175,6 +190,22 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5943273225046545701}
   m_Enabled: 1
+--- !u!114 &7841226834428537826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5943273225046545701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd2513df80eee94bb495785fa2ffcd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCursorHidden: 1
+  minPitch: -20
+  maxPitch: 80
+  speed: {x: 120, y: 120}
 --- !u!1 &7841226833258302677
 GameObject:
   m_ObjectHideFlags: 0
