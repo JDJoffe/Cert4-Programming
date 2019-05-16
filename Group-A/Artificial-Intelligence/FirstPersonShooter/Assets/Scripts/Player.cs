@@ -4,89 +4,68 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float runSpeed = 8f;
-    public float walkSpeed = 6f;
-    public float gravity = -10f;
-    public float jumpHeight = 15f;
-    public LayerMask groundLayer;
-    public float groundRayDistance = 1.1f;
+  public float runSpeed = 8f;
+  public float walkSpeed = 6f;
+  public float gravity = -10f;
+  public float jumpHeight = 15f;
 
-    private CharacterController controller;
-    private Vector3 motion;
-    private bool isJumping = false;
+  private CharacterController controller;
+  private Vector3 motion;
+  private Vector3 velocity;
 
-    // Start is called before the first frame update
-    void Start()
+  // Start is called before the first frame update
+  void Start()
+  {
+    controller = GetComponent<CharacterController>();
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    float inputH = Input.GetAxis("Horizontal");
+    float inputV = Input.GetAxis("Vertical");
+
+    // If Is Grounded AND is NOT jumping
+    if (controller.isGrounded)
     {
-        controller = GetComponent<CharacterController>();
+      velocity -= motion;
+
+      Vector3 normalized = new Vector3(inputH, 0f, inputV);
+      normalized.Normalize();
+      Move(normalized.x, normalized.z);
+
+      velocity += motion;
+
+      velocity.y = gravity * Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        float inputH = Input.GetAxis("Horizontal");
-        float inputV = Input.GetAxis("Vertical");
-        bool inputJump = Input.GetButtonDown("Jump");
+    velocity += Vector3.up * gravity * Time.deltaTime;
 
-        Vector3 normalized = new Vector3(inputH, 0f, inputV);
-        normalized.Normalize();
-        Move(normalized.x, normalized.z);
-        
-        // If Jump button pressed (Space)
-        if (IsGrounded() && inputJump)
-        {
-            // Make character jump
-            Jump(jumpHeight);
-        }
+    // Applies motion to CharacterController
+    controller.Move(velocity * Time.deltaTime);
+  }
 
-        // If Is Grounded AND is NOT jumping
-        if (IsGrounded() && !isJumping)
-        {
-            motion.y = 0f;
-        }
+  // Move the Player Characer in the direction we give it (horizontal / vertical)
+  public void Move(float horizontal, float vertical)
+  {
+    Vector3 direction = new Vector3(horizontal, 0f, vertical);
 
-        // If is NOT Grounded AND isJumping
-        if (!IsGrounded() && isJumping)
-        {
-            isJumping = false;
-        }
-        
-        motion.y += gravity * Time.deltaTime;
+    // Convert local direction to world space
+    direction = transform.TransformDirection(direction);
 
-        // Applies motion to CharacterController
-        controller.Move(motion * Time.deltaTime);
-    }
+    motion.x = direction.x * walkSpeed;
+    motion.z = direction.z * walkSpeed;
+  }
 
-    // Test if the Player is Grounded
-    private bool IsGrounded()
-    {
-        Ray groundRay = new Ray(transform.position, -transform.up);
-        // Performing Raycast
-        if (Physics.Raycast(groundRay, groundRayDistance, groundLayer))
-        {
-            // Return true is hit
-            return true; // - Exits the function
-        }
-        // Return false if not hit
-        return false; // - Exits the function
-    }
+  // Makes the player jump when called
+  public void Jump(float height)
+  {
+    motion.y = height;
+  }
 
-    // Move the Player Characer in the direction we give it (horizontal / vertical)
-    public void Move(float horizontal, float vertical)
-    {
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
-
-        // Convert local direction to world space
-        direction = transform.TransformDirection(direction);
-
-        motion.x = direction.x * walkSpeed;
-        motion.z = direction.z * walkSpeed;
-    }
-
-    // Makes the player jump when called
-    public void Jump(float height)
-    {
-        motion.y = height;
-        isJumping = true;
-    }
+  public void Bounce(Transform reference)
+  {
+    motion = Vector3.zero;
+    velocity = reference.up * jumpHeight;
+  }
 }
