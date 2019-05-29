@@ -4,36 +4,66 @@ using UnityEngine;
 
 using Prime31;
 
-[RequireComponent(typeof(CharacterController2D))]
 public class Player : MonoBehaviour
 {
-    public float gravity = -10f;
-    public float movementSpeed = 10f;
-    public CharacterController2D controller;
+  public float gravity = -10, moveSpeed = 10f, jumpHeight = 8f;
 
-    private Vector3 motion; // Store the difference in movement
+  private CharacterController2D controller;
+  private SpriteRenderer rend;
+  private Animator anim;
 
-    void Reset()
+  private Vector3 motion;
+
+  void Start()
+  {
+    controller = GetComponent<CharacterController2D>();
+    rend = GetComponent<SpriteRenderer>();
+    anim = GetComponent<Animator>();
+  }
+
+  void Update()
+  {
+    float inputH = Input.GetAxis("Horizontal");
+    float inputV = Input.GetAxis("Vertical");
+    // If character is grounded
+    if (!controller.isGrounded)
     {
-        controller = GetComponent<CharacterController2D>();       
+      // Apply gravity
+      motion.y += gravity * Time.deltaTime;
     }
-    
-    // Update is called once per frame
-    void Update()
+    // If space is pressed
+    if (Input.GetButtonDown("Jump"))
     {
-        // Get Horizontal Input (A / D or Left / Right arrows)
-        float inputH = Input.GetAxis("Horizontal");
-        // Move left / right
-        motion.x = inputH * movementSpeed;
-        // If the controller is touching the ground
-        if(controller.isGrounded)
-        {
-            // Reset Y
-            motion.y = 0f;
-        }
-        // Apply gravity
-        motion.y += gravity * Time.deltaTime; 
-        // Apply movement with motion
-        controller.Move(motion * Time.deltaTime);
+      // Make the player jump
+      Jump();
     }
+    // Climb up or down depending on Y value
+    Climb(inputV);
+    // Move left or right depending on X value
+    Move(inputH);
+    // Move the controller with modified motion
+    controller.move(motion * Time.deltaTime);
+  }
+
+  public void Move(float inputH)
+  {
+    motion.x = inputH * moveSpeed;
+    anim.SetBool("IsRunning", inputH != 0);
+    rend.flipX = inputH < 0;
+  }
+
+  public void Climb(float inputV)
+  {
+
+  }
+
+  public void Hurt()
+  {
+
+  }
+
+  public void Jump()
+  {
+    motion.y = jumpHeight;
+  }
 }
