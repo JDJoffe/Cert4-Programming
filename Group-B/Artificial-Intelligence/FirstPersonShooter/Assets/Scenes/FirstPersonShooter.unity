@@ -290,7 +290,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &581140794
 Transform:
@@ -794,41 +794,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884884095}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2122451976 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2821413866616606792, guid: 4b010c294971e394a96a4405b7c747f2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2821413866894438594}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2122451977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122451976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982bff6b813420c449d2425cbe7a7609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weighting: 7.5
-  target: {fileID: 7841226834428537831}
-  stoppingDistance: 0
---- !u!114 &2122451983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122451976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d5ac9549aa90042bc7475ad85f63b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxVelocity: 5
-  maxDistance: 5
 --- !u!1001 &2821413866894438594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -896,6 +861,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2103934629397132263, guid: 4b010c294971e394a96a4405b7c747f2,
+        type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 162751912009948711, guid: 4b010c294971e394a96a4405b7c747f2,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 7841226834428537831}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b010c294971e394a96a4405b7c747f2, type: 3}
 --- !u!1001 &7841226834428537824
