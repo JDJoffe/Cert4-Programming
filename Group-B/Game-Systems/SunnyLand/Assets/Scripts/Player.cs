@@ -47,8 +47,11 @@ public class Player : MonoBehaviour
 
   public void Move(float inputH)
   {
+    // 1
     motion.x = inputH * moveSpeed;
+    // 2
     anim.SetBool("IsRunning", inputH != 0);
+    // 3
     rend.flipX = inputH < 0;
   }
 
@@ -64,6 +67,7 @@ public class Player : MonoBehaviour
 
   public void Jump()
   {
+    // 4
     motion.y = jumpHeight;
   }
 }
