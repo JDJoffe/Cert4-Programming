@@ -38,21 +38,24 @@ public class Player : MonoBehaviour
     float inputH = Input.GetAxis("Horizontal");
     // Gathers Up and Down input
     float inputV = Input.GetAxis("Vertical");
-    // If controller is NOT grounded
-    if (!controller.isGrounded)
+    // If controller is:
+    if (!controller.isGrounded && // NOT grounded
+        !isClimbing) // NOT climbing
     {
       // Apply delta to gravity
       velocity.y += gravity * Time.deltaTime;
     }
-    // Get Spacebar input
-    bool isJumping = Input.GetButtonDown("Jump");
-    // If Player pressed jump
-    if (isJumping)
+    else
     {
-      // Make the controller jump
-      Jump();
+      // Get Spacebar input
+      bool isJumping = Input.GetButtonDown("Jump");
+      // If Player pressed jump
+      if (isJumping)
+      {
+        // Make the controller jump
+        Jump();
+      }
     }
-
 
     // 1.
     anim.SetBool("IsGrounded", controller.isGrounded);
@@ -60,10 +63,14 @@ public class Player : MonoBehaviour
     anim.SetFloat("JumpY", velocity.y);
 
     Move(inputH);
-    Climb(inputV);
+    Climb(inputH, inputV);
 
-    // Applies velocity to controller (to get it to move)
-    controller.move(velocity * Time.deltaTime);
+    // If the character isn't climbing
+    if (!isClimbing)
+    {
+      // Applies velocity to controller (to get it to move)
+      controller.move(velocity * Time.deltaTime);
+    }
   }
 
   void Move(float inputH)
@@ -85,11 +92,11 @@ public class Player : MonoBehaviour
     }
   }
 
-  void Climb(float inputV)
+  void Climb(float inputH, float inputV)
   {
     bool isOverLadder = false; // Is overlapping ladder
     // Get a list of all hit objects overlapping point
-    Collider2D[] hits = Physics2D.OverlapPointAll(transform.position);
+    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, centreRadius);
     // Loop through each point
     foreach (var hit in hits)
     {
@@ -107,15 +114,33 @@ public class Player : MonoBehaviour
     {
       //  Is Climbing
       isClimbing = true;
+      velocity.y = 0; // Cancel Y velocity
+    }
+
+    // If NOT over ladder
+    if(!isOverLadder)
+    {
+      // Not climbing anymore
+      isClimbing = false;
     }
 
     // If is climbing
-    //  Perform logic for climbing
+    if (isClimbing)
+    {
+      // Translate character up and down
+      Vector3 inputDir = new Vector3(inputH, inputV);
+      transform.Translate(inputDir * moveSpeed * Time.deltaTime);
+    }
+
+    anim.SetBool("IsClimbing", isClimbing);
+    anim.SetFloat("ClimbSpeed", inputV);
   }
 
   void Jump()
   {
     // 3.
     velocity.y = jumpHeight;
+
+    anim.SetTrigger("Jump");
   }
 }
