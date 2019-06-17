@@ -9,9 +9,8 @@ public class SceneLoader : MonoBehaviour
 {
     public void NextScene()
     {
+        // TASK: Implement Scene Loading
         // Get the current scene
-        Scene currentScene = SceneManager.GetActiveScene();
         // Load the next scene after current scene
-        SceneManager.LoadScene(currentScene.buildIndex + 1);
     }
 }

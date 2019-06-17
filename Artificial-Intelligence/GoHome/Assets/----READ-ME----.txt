@@ -1,0 +1,9 @@
+Welcome to Go Home!
+
+Be sure that you complete the following:
+1. Loading the next Scene
+Take a look at SceneLoader.cs. The function 'NextScene' needs to load the next scene when called.
+Resource(s): 
+- Unity API: https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadScene.html
+- Loading Scenes with SceneManager: https://www.youtube.com/watch?v=aVErs6FNbvQ
+
